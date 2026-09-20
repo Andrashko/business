@@ -14,7 +14,7 @@ NEWSPIDER_MODULE = "hotline.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -44,15 +44,15 @@ DOWNLOAD_DELAY = 1
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-    # "hotline.middlewares.HotlineSpiderMiddleware": 543,
-}
+# SPIDER_MIDDLEWARES = {
+#     "hotline.middlewares.HotlineSpiderMiddleware": 543,
+# }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-    # "hotline.middlewares.HotlineDownloaderMiddleware": 543,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#     "hotline.middlewares.HotlineDownloaderMiddleware": 543,
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -72,15 +72,15 @@ ITEM_PIPELINES = {
     "hotline.pipelines.SqlitePipeline": 600,
 }
 
-FILES_STORE = './file'
-IMAGES_STORE = './img'
+FILES_STORE = "./file"
+IMAGES_STORE = "./img"
 
 FILES_EXPIRES = 0
 IMAGES_EXPIRES = 0
 
 IMAGES_THUMBS = {
-    'small': (50, 50),
-    'big': (270, 270),
+    "small": (50, 50),
+    "big": (270, 270),
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

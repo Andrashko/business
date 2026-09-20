@@ -3,12 +3,14 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from dataclasses import dataclass, field
 
 
-class HotlineItem(scrapy.Item):
-    name = scrapy.Field()
-    price = scrapy.Field()
-    url = scrapy.Field()
-    image_urls = scrapy.Field()
-    file_urls = scrapy.Field()
+@dataclass
+class HotlineItem:
+    name: str = ""
+    price: float | str = 0.0
+    url: str = ""
+
+    image_urls: list[str] = field(default_factory=list)
+    file_urls: list[str] = field(default_factory=list)

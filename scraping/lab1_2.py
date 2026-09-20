@@ -1,5 +1,6 @@
 from requests import get
 from bs4 import BeautifulSoup
+import re
 
 
 BASE_URL = "https://hotline.ua"
@@ -7,14 +8,14 @@ URL = f"{BASE_URL}/ua/computer/noutbuki-netbuki/"
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"
 }
-LAST_PAGE = 443
+LAST_PAGE = 2
 
 # відкриваємо файл
 FILE_NAME = "laptops.txt"
 with open(FILE_NAME, "w", encoding="utf-8") as file:
-    for p in range(1, LAST_PAGE):
+    for page in range(1, LAST_PAGE):
         # надсилаємо параметр сторінки
-        page = get(URL, headers=HEADERS, params={"p": p})
+        page = get(URL, headers=HEADERS, params={"p": page})
         soup = BeautifulSoup(page.content,  "html.parser")
 
         # знаходимо список товарів
@@ -30,6 +31,6 @@ with open(FILE_NAME, "w", encoding="utf-8") as file:
                 string=True, recursive=False)
 
             print(f"Назва: {title}")
-            print(f"Ціна: {price}")
+            print(f"Ціна: {re.sub(r"\s+","", price)}")
             file.write(f"Назва: {title}\n")
-            file.write(f"Ціна: {price}\n")
+            file.write(f"Ціна: {re.sub(r"\s+","", price)}\n")

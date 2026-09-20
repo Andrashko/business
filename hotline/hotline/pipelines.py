@@ -6,6 +6,7 @@
 
 # useful for handling different item types with a single interface
 from scrapy.exceptions import DropItem
+
 # import mysql.connector
 import sqlite3
 
@@ -18,7 +19,7 @@ class SqlitePipeline:
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS 
         items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INT AUTO_INCREMENT PRIMARY KEY,
             name TEXT NOT NULL,
             price FLOAT DEFAULT 0,
             url TEXT
@@ -31,25 +32,27 @@ class SqlitePipeline:
 
     def process_item(self, item, spider):
         if self.is_duplicate(item):
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                                     UPDATE items
                                     SET price = ?
                                     WHERE name = ?
                                     """,
-                                [item.get("price"), item.get("name")]
-                                )
+                [item.get("price"), item.get("name")],
+            )
         else:
             self.cursor.execute(
                 "INSERT INTO items (name, price, url) VALUES (?, ?, ?);",
-                [item.get("name"), item.get("price"), item.get("url")])
+                [item.get("name"), item.get("price"), item.get("url")],
+            )
 
         self.connection.commit()
         return item
 
     def is_duplicate(self, item):
         self.cursor.execute(
-            "SELECT COUNT(id) FROM items WHERE name = ?;",
-            [item.get("name")])
+            "SELECT COUNT(id) FROM items WHERE name = ?;", [item.get("name")]
+        )
         count = self.cursor.fetchone()[0]
         return count > 0
 
@@ -57,10 +60,7 @@ class SqlitePipeline:
 class MySqlPipeline:
     def open_spider(self, spider):
         self.connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="scrapy"
+            host="localhost", user="root", password="", database="scrapy"
         )
         self.cursor = self.connection.cursor()
         spider.logger.info("Connected to MySQL ")
@@ -83,25 +83,27 @@ class MySqlPipeline:
 
     def process_item(self, item, spider):
         if self.is_duplicate(item):
-            self.cursor.execute("""
+            self.cursor.execute(
+                """
                                     UPDATE items
                                     SET price = %s
                                     WHERE name = %s
                                     """,
-                                [item.get("price"), item.get("name")]
-                                )
+                [item.get("price"), item.get("name")],
+            )
         else:
             self.cursor.execute(
                 "INSERT INTO items (name, price, url) VALUES (%s, %s, %s);",
-                [item.get("name"), item.get("price"), item.get("url")])
+                [item.get("name"), item.get("price"), item.get("url")],
+            )
 
         self.connection.commit()
         return item
 
     def is_duplicate(self, item):
         self.cursor.execute(
-            "SELECT COUNT(id) FROM items WHERE name = %s;",
-            [item.get("name")])
+            "SELECT COUNT(id) FROM items WHERE name = %s;", [item.get("name")]
+        )
         count = self.cursor.fetchone()[0]
         return count > 0
 

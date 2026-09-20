@@ -1461,7 +1461,9 @@ iD.write('<img src="'+iS+'" border="0" width="88" height="31" />');
 </div>
 """
 for link in re.finditer(
-    r"https?://[\w\-./]*",
+    #r"https?://[\w\-./]+",
+    # r"/[\w\-./()]+\.jpe?g",
+    r"<li>.*</li>",
     HTML
 ):
     print(link)
