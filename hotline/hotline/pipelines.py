@@ -111,7 +111,7 @@ class MySqlPipeline:
 class PricePipeline:
     def process_item(self, item, spider):
         try:
-            item["price"] = float(item.get("price").replace("\xa0", ""))
+            item.price = float(item.price.replace("\xa0", "").strip())
             return item
         except:
             raise DropItem(f"Bad price in {item}")
