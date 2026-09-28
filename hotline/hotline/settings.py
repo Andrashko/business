@@ -114,3 +114,30 @@ TOKEN_URL = "https://localhost:5001/api/users/login"
 TOKEN_LOGIN = "Login"
 TOKEN_PASSWORD = "Password"
 POST_URL = "https://localhost:5001/api/Shops/"
+
+meta={
+    "playwright": True,
+
+    "playwright_page_methods": [
+        PageMethod(
+            "wait_for_selector",
+            '//input[@name="email"]'
+        ),
+
+        PageMethod(
+            "fill",
+            '//input[@name="email"]',
+            "user@example.com"
+        ),
+
+        PageMethod(
+            "click",
+            '//div[@role="button" and normalize-space(.)="Увійти"]'
+        ),
+
+        PageMethod(
+            "wait_for_selector",
+            "img"
+        )
+    ]
+}
